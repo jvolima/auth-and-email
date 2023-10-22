@@ -1,7 +1,7 @@
 # Auth and email
 
 ## Features
-- [] Sign up
-- [] Sign in
+- [x] Sign up
+- [x] Sign in
 - [] Email verification to sign up
 - [] Change password by sending email
