@@ -1,6 +1,8 @@
 package com.jvolima.authandemail.auth;
 
 import com.jvolima.authandemail.config.JwtService;
+import com.jvolima.authandemail.exceptions.BadRequestException;
+import com.jvolima.authandemail.exceptions.NotFoundException;
 import com.jvolima.authandemail.user.Role;
 import com.jvolima.authandemail.user.User;
 import com.jvolima.authandemail.user.UserRepository;
@@ -24,7 +26,7 @@ public class AuthenticationService {
     public SignUpResponse signUp(SignUpRequest signUpRequest) {
         Optional<User> userAlreadyExists = userRepository.findByEmail(signUpRequest.getEmail());
         if (userAlreadyExists.isPresent()) {
-            throw new RuntimeException("There is already a user with this email.");
+            throw new BadRequestException("There is already a user with this email.");
         }
         User user = new User();
         user.setFirstname(signUpRequest.getFirstname());
@@ -46,7 +48,7 @@ public class AuthenticationService {
                 )
         );
         User user = userRepository.findByEmail(signInRequest.getEmail())
-                .orElseThrow(() -> new RuntimeException("User not found."));
+                .orElseThrow(() -> new NotFoundException("User not found."));
         String jwtToken = jwtService.generateToken(user);
 
         return new SignInResponse(jwtToken);

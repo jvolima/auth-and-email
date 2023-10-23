@@ -39,6 +39,16 @@ public class ControllerExceptionHandler {
             );
             problemDetail.setProperty("access_denied_reason", "Token expired.");
         }
+        if (e instanceof BadRequestException) {
+            problemDetail = ProblemDetail.forStatusAndDetail(
+                    HttpStatusCode.valueOf(400), e.getMessage()
+            );
+        }
+        if (e instanceof NotFoundException) {
+            problemDetail = ProblemDetail.forStatusAndDetail(
+                    HttpStatusCode.valueOf(404), e.getMessage()
+            );
+        }
 
         return problemDetail;
     }
