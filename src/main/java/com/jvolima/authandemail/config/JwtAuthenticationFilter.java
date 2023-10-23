@@ -37,7 +37,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String jwt;
             final String userEmail;
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                throw new UnauthorizedException("Token missing.");
+                filterChain.doFilter(request, response);
+                return;
             }
             jwt = authHeader.substring(7); // Bearer {token}
             userEmail = jwtService.extractUsername(jwt);
