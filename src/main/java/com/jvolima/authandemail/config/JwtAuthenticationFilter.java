@@ -1,5 +1,6 @@
 package com.jvolima.authandemail.config;
 
+import com.jvolima.authandemail.exceptions.UnauthorizedException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -36,8 +37,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
             final String jwt;
             final String userEmail;
             if (authHeader == null || !authHeader.startsWith("Bearer ")) {
-                filterChain.doFilter(request, response);
-                return;
+                throw new UnauthorizedException("Token missing.");
             }
             jwt = authHeader.substring(7); // Bearer {token}
             userEmail = jwtService.extractUsername(jwt);
