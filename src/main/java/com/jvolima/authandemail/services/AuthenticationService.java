@@ -1,11 +1,14 @@
-package com.jvolima.authandemail.auth;
+package com.jvolima.authandemail.services;
 
-import com.jvolima.authandemail.config.JwtService;
+import com.jvolima.authandemail.dto.SignInRequestDTO;
+import com.jvolima.authandemail.dto.SignInResponseDTO;
+import com.jvolima.authandemail.dto.SignUpRequestDTO;
+import com.jvolima.authandemail.dto.SignUpResponseDTO;
 import com.jvolima.authandemail.exceptions.BadRequestException;
 import com.jvolima.authandemail.exceptions.NotFoundException;
-import com.jvolima.authandemail.user.Role;
-import com.jvolima.authandemail.user.User;
-import com.jvolima.authandemail.user.UserRepository;
+import com.jvolima.authandemail.entities.Role;
+import com.jvolima.authandemail.entities.User;
+import com.jvolima.authandemail.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -23,7 +26,7 @@ public class AuthenticationService {
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
-    public SignUpResponse signUp(SignUpRequest signUpRequest) {
+    public SignUpResponseDTO signUp(SignUpRequestDTO signUpRequest) {
         Optional<User> userAlreadyExists = userRepository.findByEmail(signUpRequest.getEmail());
         if (userAlreadyExists.isPresent()) {
             throw new BadRequestException("There is already a user with this email.");
@@ -37,20 +40,20 @@ public class AuthenticationService {
         user.setRole(Role.USER);
         user = userRepository.save(user);
 
-        return new SignUpResponse(user.getId());
+        return new SignUpResponseDTO(user.getId());
     }
 
-    public SignInResponse signIn(SignInRequest signInRequest) {
+    public SignInResponseDTO signIn(SignInRequestDTO signInRequestDTO) {
         authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(
-                        signInRequest.getEmail(),
-                        signInRequest.getPassword()
+                        signInRequestDTO.getEmail(),
+                        signInRequestDTO.getPassword()
                 )
         );
-        User user = userRepository.findByEmail(signInRequest.getEmail())
+        User user = userRepository.findByEmail(signInRequestDTO.getEmail())
                 .orElseThrow(() -> new NotFoundException("User not found."));
         String jwtToken = jwtService.generateToken(user);
 
-        return new SignInResponse(jwtToken);
+        return new SignInResponseDTO(jwtToken);
     }
 }

@@ -1,6 +1,6 @@
 package com.jvolima.authandemail.config;
 
-import com.jvolima.authandemail.user.UserRepository;
+import com.jvolima.authandemail.repositories.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

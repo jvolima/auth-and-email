@@ -1,6 +1,6 @@
 package com.jvolima.authandemail.config;
 
-import com.jvolima.authandemail.exceptions.UnauthorizedException;
+import com.jvolima.authandemail.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

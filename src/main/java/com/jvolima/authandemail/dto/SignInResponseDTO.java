@@ -1,4 +1,4 @@
-package com.jvolima.authandemail.auth;
+package com.jvolima.authandemail.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,7 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SignInResponse {
+public class SignInResponseDTO {
 
     private String token;
 }

@@ -1,4 +1,4 @@
-package com.jvolima.authandemail.auth;
+package com.jvolima.authandemail.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,10 +9,8 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SignUpRequest {
+public class SignInRequestDTO {
 
-    private String firstname;
-    private String lastname;
     private String email;
     private String password;
 }

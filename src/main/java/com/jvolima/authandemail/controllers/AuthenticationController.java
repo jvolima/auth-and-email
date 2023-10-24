@@ -1,5 +1,7 @@
-package com.jvolima.authandemail.auth;
+package com.jvolima.authandemail.controllers;
 
+import com.jvolima.authandemail.dto.*;
+import com.jvolima.authandemail.services.AuthenticationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -18,21 +20,21 @@ public class AuthenticationController {
     private final AuthenticationService authenticationService;
 
     @PostMapping("/sign-up")
-    public ResponseEntity<Void> signUp(@RequestBody SignUpRequest signUpRequest) {
-        SignUpResponse signUpResponse = authenticationService.signUp(signUpRequest);
+    public ResponseEntity<Void> signUp(@RequestBody SignUpRequestDTO signUpRequestDTO) {
+        SignUpResponseDTO signUpResponseDTO = authenticationService.signUp(signUpRequestDTO);
         URI uri = ServletUriComponentsBuilder
                 .fromCurrentRequest()
                 .path("/{id}")
-                .buildAndExpand(signUpResponse.getId())
+                .buildAndExpand(signUpResponseDTO.getId())
                 .toUri();
 
         return ResponseEntity.created(uri).build();
     }
 
     @PostMapping("/sign-in")
-    public ResponseEntity<SignInResponse> signIn(@RequestBody SignInRequest signInRequest) {
-        SignInResponse signInResponse = authenticationService.signIn(signInRequest);
+    public ResponseEntity<SignInResponseDTO> signIn(@RequestBody SignInRequestDTO signInRequestDTO) {
+        SignInResponseDTO signInResponseDTO = authenticationService.signIn(signInRequestDTO);
 
-        return ResponseEntity.ok().body(signInResponse);
+        return ResponseEntity.ok().body(signInResponseDTO);
     }
 }

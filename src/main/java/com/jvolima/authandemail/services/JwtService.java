@@ -1,4 +1,4 @@
-package com.jvolima.authandemail.config;
+package com.jvolima.authandemail.services;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

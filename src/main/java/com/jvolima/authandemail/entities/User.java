@@ -1,4 +1,4 @@
-package com.jvolima.authandemail.user;
+package com.jvolima.authandemail.entities;
 
 import jakarta.persistence.*;
 import lombok.*;

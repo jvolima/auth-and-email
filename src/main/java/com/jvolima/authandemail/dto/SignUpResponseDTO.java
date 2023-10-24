@@ -1,4 +1,4 @@
-package com.jvolima.authandemail.auth;
+package com.jvolima.authandemail.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -11,7 +11,7 @@ import java.util.UUID;
 @AllArgsConstructor
 @Getter
 @Setter
-public class SignUpResponse {
+public class SignUpResponseDTO {
 
     private UUID id;
 }
