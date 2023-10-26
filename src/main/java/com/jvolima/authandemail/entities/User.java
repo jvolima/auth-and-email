@@ -22,15 +22,25 @@ public class User implements UserDetails {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
+
+    @Column(nullable = false)
     private String firstname;
+
+    @Column(nullable = false)
     private String lastname;
 
-    @Column(unique = true)
+    @Column(nullable = false, unique = true)
     private String email;
+
+    @Column(nullable = false)
     private String password;
 
     @Enumerated(EnumType.STRING)
     private Role role;
+    private Boolean enabled;
+
+    @Column(updatable = false)
+    private String verificationCode;
 
     @Override
     public boolean equals(Object o) {
