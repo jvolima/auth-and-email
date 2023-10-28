@@ -54,4 +54,22 @@ public class UserControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isCreated());
     }
+
+    @Test
+    public void signUpShouldReturnBadRequestWhenEmailIsDuplicated() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.signUpRequestDTO());
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users/sign-up")
+                .content(jsonBody)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON));
+
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users/sign-up")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
 }
