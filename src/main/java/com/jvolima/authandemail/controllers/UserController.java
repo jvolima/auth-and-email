@@ -1,7 +1,6 @@
 package com.jvolima.authandemail.controllers;
 
-import com.jvolima.authandemail.dto.SignUpRequestDTO;
-import com.jvolima.authandemail.dto.SignUpResponseDTO;
+import com.jvolima.authandemail.dto.*;
 import com.jvolima.authandemail.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,11 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping("/hello")
-    public ResponseEntity<Object> hello() {
-        return ResponseEntity.ok().body("Hello authenticated user!");
+    public ResponseEntity<HelloResponseDTO> hello() {
+        HelloResponseDTO helloResponseDTO = new HelloResponseDTO();
+        helloResponseDTO.setMessage("Hello authenticated user!");
+
+        return ResponseEntity.ok().body(helloResponseDTO);
     }
 
     @PostMapping("/sign-up")
@@ -35,9 +37,11 @@ public class UserController {
     }
 
     @GetMapping("/verify")
-    public ResponseEntity<String> verify(@RequestParam String code) {
+    public ResponseEntity<VerifyResponseDTO> verify(@RequestParam String code) {
         userService.verifyAccount(code);
+        VerifyResponseDTO verifyResponseDTO = new VerifyResponseDTO();
+        verifyResponseDTO.setMessage("Account verified successfully.");
 
-        return ResponseEntity.ok().body("Account verified successfully.");
+        return ResponseEntity.ok().body(verifyResponseDTO);
     }
 }
