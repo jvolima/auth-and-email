@@ -73,4 +73,14 @@ public class UserControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isOk());
     }
+
+    @Test
+    public void verifyShouldReturnNotFoundWhenCodeIsInvalid() throws Exception {
+        String invalidCode = "invalid";
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify?code=" + invalidCode)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isNotFound());
+    }
 }
