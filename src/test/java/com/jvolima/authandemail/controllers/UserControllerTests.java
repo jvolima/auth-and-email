@@ -63,4 +63,14 @@ public class UserControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isBadRequest());
     }
+
+    @Test
+    public void verifyShouldReturnOkWhenCodeIsValid() throws Exception {
+        String notVerifiedUserCode = "code2";
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify?code=" + notVerifiedUserCode)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
