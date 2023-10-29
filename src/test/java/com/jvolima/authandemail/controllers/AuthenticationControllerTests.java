@@ -65,4 +65,17 @@ public class AuthenticationControllerTests {
         result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.token").doesNotExist());
     }
+
+    @Test
+    public void signInShouldReturnBadRequestWhenAccountIsNotVerified() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.notVerifiedUserSignIn());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/sign-in")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.token").doesNotExist());
+    }
 }

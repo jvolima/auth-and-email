@@ -20,15 +20,26 @@ public class IntegrationTestsSeed implements CommandLineRunner {
     @Override
     public void run(String... args) throws Exception {
 
-        User user = new User();
-        user.setFirstname("Alice");
-        user.setLastname("James");
-        user.setEmail("alicejames@gmail.com");
-        String encodedPassword = passwordEncoder.encode("123456");
-        user.setPassword(encodedPassword);
-        user.setRole(Role.USER);
-        user.setVerificationCode("code");
-        user.setEnabled(true);
-        userRepository.save(user);
+        User user1 = new User();
+        user1.setFirstname("Alice");
+        user1.setLastname("James");
+        user1.setEmail("alicejames@gmail.com");
+        String encodedPassword1 = passwordEncoder.encode("123456");
+        user1.setPassword(encodedPassword1);
+        user1.setRole(Role.USER);
+        user1.setVerificationCode("code1");
+        user1.setEnabled(true);
+        userRepository.save(user1);
+
+        User user2 = new User();
+        user2.setFirstname("Zoe");
+        user2.setLastname("Brown");
+        user2.setEmail("zoebrown@gmail.com");
+        String encodedPassword2 = passwordEncoder.encode("123456");
+        user2.setPassword(encodedPassword2);
+        user2.setRole(Role.USER);
+        user2.setVerificationCode("code2");
+        user2.setEnabled(false);
+        userRepository.save(user2);
     }
 }

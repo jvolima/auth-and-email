@@ -33,6 +33,14 @@ public class Factory {
         return signInRequestDTO;
     }
 
+    public static SignInRequestDTO notVerifiedUserSignIn() {
+        SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
+        signInRequestDTO.setEmail("zoebrown@gmail.com");
+        signInRequestDTO.setPassword("123456");
+
+        return signInRequestDTO;
+    }
+
     public static SignInRequestDTO seedUserSignIn() {
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
         signInRequestDTO.setEmail("alicejames@gmail.com");
