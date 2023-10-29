@@ -42,7 +42,7 @@ public class UserService {
         String verificationCode = UUID.randomUUID().toString().replaceAll("-", "");
         user.setVerificationCode(verificationCode);
         user = userRepository.save(user);
-        String verificationLink = apiUrl + "/api/v1/users/verify?code=" + user.getVerificationCode();
+        String verificationLink = apiUrl + "/api/v1/users/verify/" + user.getVerificationCode();
         emailService.sendEmail(
                 user.getEmail(),
                 "Verify account",

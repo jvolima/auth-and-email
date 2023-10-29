@@ -1,6 +1,7 @@
 package com.jvolima.authandemail.controllers;
 
 import com.jvolima.authandemail.dto.*;
+import com.jvolima.authandemail.exceptions.BadRequestException;
 import com.jvolima.authandemail.services.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -36,8 +37,8 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/verify")
-    public ResponseEntity<VerifyResponseDTO> verify(@RequestParam String code) {
+    @GetMapping("/verify/{code}")
+    public ResponseEntity<VerifyResponseDTO> verify(@PathVariable String code) {
         userService.verifyAccount(code);
         VerifyResponseDTO verifyResponseDTO = new VerifyResponseDTO();
         verifyResponseDTO.setMessage("Account verified successfully.");

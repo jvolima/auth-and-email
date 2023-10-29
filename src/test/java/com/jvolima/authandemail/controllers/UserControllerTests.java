@@ -68,7 +68,7 @@ public class UserControllerTests {
     public void verifyShouldReturnOkWhenCodeIsValid() throws Exception {
         String notVerifiedUserCode = "code2";
         ResultActions result =
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify?code=" + notVerifiedUserCode)
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify/" + notVerifiedUserCode)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(MockMvcResultMatchers.status().isOk());
@@ -78,7 +78,7 @@ public class UserControllerTests {
     public void verifyShouldReturnNotFoundWhenCodeIsInvalid() throws Exception {
         String invalidCode = "invalid";
         ResultActions result =
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify?code=" + invalidCode)
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify/" + invalidCode)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(MockMvcResultMatchers.status().isNotFound());
