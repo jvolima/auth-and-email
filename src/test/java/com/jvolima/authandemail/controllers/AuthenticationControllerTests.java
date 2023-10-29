@@ -49,6 +49,20 @@ public class AuthenticationControllerTests {
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
 
+        result.andExpect(MockMvcResultMatchers.status().isOk());
         result.andExpect(MockMvcResultMatchers.jsonPath("$.token").exists());
+    }
+
+    @Test
+    public void signInShouldReturnUnauthorizedWhenCredentialsAreInvalid() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.nonExistingUserSignIn());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/sign-in")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isUnauthorized());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.token").doesNotExist());
     }
 }
