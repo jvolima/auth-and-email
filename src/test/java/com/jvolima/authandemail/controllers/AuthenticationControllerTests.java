@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 @AutoConfigureMockMvc
 @Transactional
 @ActiveProfiles(profiles = "test")
-public class UserControllerTests {
+public class AuthenticationControllerTests {
 
     @Autowired
     private MockMvc mockMvc;
@@ -41,26 +41,14 @@ public class UserControllerTests {
     }
 
     @Test
-    public void signUpShouldReturnCreatedWhenDataIsValid() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(Factory.newUserSignUp());
+    public void signInShouldReturnTokenWhenDataIsValid() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.seedUserSignIn());
         ResultActions result =
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users/sign-up")
+                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/sign-in")
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
 
-        result.andExpect(MockMvcResultMatchers.status().isCreated());
-    }
-
-    @Test
-    public void signUpShouldReturnBadRequestWhenEmailIsDuplicated() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(Factory.seedUserSignUp());
-        ResultActions result =
-                mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users/sign-up")
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+        result.andExpect(MockMvcResultMatchers.jsonPath("$.token").exists());
     }
 }

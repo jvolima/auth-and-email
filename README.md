@@ -96,6 +96,18 @@ BODY (JSON):
   "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJqdmRvcGFyYWd1YWlAZ21haWwuY29tIiwiaWF0IjoxNjk4NTI5MDMzLCJleHAiOjE2OTg2MTU0MzN9.Siww5ClIEIelSCDVSEGMCLXAUfe-ed7UykZVbxvlAiY"
 }
 ```
+STATUS: 400 BAD REQUEST<br/>
+DESCRIPTION: account not verified <br/>
+BODY (JSON):
+```json
+{
+  "type": "about:blank",
+  "title": "Bad Request",
+  "status": 400,
+  "detail": "Account not verified",
+  "instance": "/api/v1/auth/sign-in"
+}
+```
 STATUS: 401 UNAUTHORIZED<br/>
 DESCRIPTION: incorrect credentials <br/>
 BODY (JSON):
