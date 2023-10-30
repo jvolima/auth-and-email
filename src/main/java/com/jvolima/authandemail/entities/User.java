@@ -40,7 +40,8 @@ public class User implements UserDetails {
     private Boolean enabled;
 
     @Column(updatable = false)
-    private String verificationCode;
+    private String verificationToken;
+    private String changePasswordToken;
 
     @Override
     public boolean equals(Object o) {

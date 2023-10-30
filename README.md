@@ -4,7 +4,7 @@
 - [x] Sign up
 - [x] Sign in
 - [x] Email verification to sign up
-- [] Change password by sending email
+- [x] Change password by sending email
 
 ## Stack
 - Java 17
@@ -17,9 +17,10 @@
 - JavaMail
 
 ## Extra miles
+- [] Token and expiration date in the user table to change the password
 - [] Flyway
 - [] Docker
-- [] Integration tests
+- [x] Integration tests
 
 ## Routes
 
@@ -52,10 +53,10 @@ BODY (JSON):
 }
 ```
 
-### GET `/api/v1/users/verify` - Verify user account
+### GET `/api/v1/users/verify/{code}` - Verify user account
 **REQUEST** <br/>
 HEADER: none <br/>
-QUERY PARAM: `/api/v1/users/verify?code=example` <br/>
+ROUTE PARAM: `/api/v1/users/verify/example` <br/>
 **RESPONSES** <br/>
 STATUS: 200 OK <br/>
 BODY (JSON):

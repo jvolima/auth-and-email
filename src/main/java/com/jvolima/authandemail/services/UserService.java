@@ -1,7 +1,6 @@
 package com.jvolima.authandemail.services;
 
-import com.jvolima.authandemail.dto.SignUpRequestDTO;
-import com.jvolima.authandemail.dto.SignUpResponseDTO;
+import com.jvolima.authandemail.dto.*;
 import com.jvolima.authandemail.entities.Role;
 import com.jvolima.authandemail.entities.User;
 import com.jvolima.authandemail.exceptions.BadRequestException;
@@ -11,6 +10,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
 import java.util.UUID;
@@ -26,6 +26,7 @@ public class UserService {
     @Value("${spring.api.url}")
     private String apiUrl;
 
+    @Transactional
     public SignUpResponseDTO signUp(SignUpRequestDTO signUpRequest) {
         Optional<User> userAlreadyExists = userRepository.findByEmail(signUpRequest.getEmail());
         if (userAlreadyExists.isPresent()) {
@@ -39,10 +40,10 @@ public class UserService {
         user.setPassword(encodedPassword);
         user.setRole(Role.USER);
         user.setEnabled(false);
-        String verificationCode = UUID.randomUUID().toString().replaceAll("-", "");
-        user.setVerificationCode(verificationCode);
+        String verificationToken = UUID.randomUUID().toString().replaceAll("-", "");
+        user.setVerificationToken(verificationToken);
         user = userRepository.save(user);
-        String verificationLink = apiUrl + "/api/v1/users/verify/" + user.getVerificationCode();
+        String verificationLink = apiUrl + "/api/v1/users/verify/" + user.getVerificationToken();
         emailService.sendEmail(
                 user.getEmail(),
                 "Verify account",
@@ -52,9 +53,31 @@ public class UserService {
         return new SignUpResponseDTO(user.getId());
     }
 
-    public void verifyAccount(String verificationCode) {
-        User user = userRepository.findByVerificationCode(verificationCode).orElseThrow(() -> new NotFoundException("User not found."));
+    @Transactional
+    public void verifyAccount(String verificationToken) {
+        User user = userRepository.findByVerificationToken(verificationToken).orElseThrow(() -> new NotFoundException("User not found."));
         user.setEnabled(true);
+        userRepository.save(user);
+    }
+
+    @Transactional
+    public void forgotPassword(ForgotPasswordRequestDTO forgotPasswordRequestDTO) {
+        User user = userRepository.findByEmail(forgotPasswordRequestDTO.getEmail()).orElseThrow(() -> new NotFoundException("User not found."));
+        String changePasswordToken = UUID.randomUUID().toString().replaceAll("-", "");
+        user.setChangePasswordToken(changePasswordToken);
+        userRepository.save(user);
+        emailService.sendEmail(
+                user.getEmail(),
+                "Change password",
+                "To change your password, use this token: " + changePasswordToken + " and pass it as a parameter in the /change-password route with the new password in the body"
+        );
+    }
+
+    @Transactional
+    public void changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
+        User user = userRepository.findByChangePasswordToken(changePasswordRequestDTO.getChangePasswordToken()).orElseThrow(() -> new NotFoundException("User not found."));
+        String encodedPassword = passwordEncoder.encode(changePasswordRequestDTO.getNewPassword());
+        user.setPassword(encodedPassword);
         userRepository.save(user);
     }
 }

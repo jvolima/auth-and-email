@@ -37,12 +37,30 @@ public class UserController {
         return ResponseEntity.created(uri).build();
     }
 
-    @GetMapping("/verify/{code}")
-    public ResponseEntity<VerifyResponseDTO> verify(@PathVariable String code) {
-        userService.verifyAccount(code);
+    @GetMapping("/verify/{verificationToken}")
+    public ResponseEntity<VerifyResponseDTO> verify(@PathVariable String verificationToken) {
+        userService.verifyAccount(verificationToken);
         VerifyResponseDTO verifyResponseDTO = new VerifyResponseDTO();
         verifyResponseDTO.setMessage("Account verified successfully.");
 
         return ResponseEntity.ok().body(verifyResponseDTO);
+    }
+
+    @GetMapping("/forgot-password")
+    public ResponseEntity<ForgotPasswordResponseDTO> forgotPassword(@RequestBody ForgotPasswordRequestDTO forgotPasswordRequestDTO) {
+        userService.forgotPassword(forgotPasswordRequestDTO);
+        ForgotPasswordResponseDTO forgotPasswordResponseDTO = new ForgotPasswordResponseDTO();
+        forgotPasswordResponseDTO.setMessage("Email to change password has been sent");
+
+        return ResponseEntity.ok().body(forgotPasswordResponseDTO);
+    }
+
+    @PatchMapping("/change-password")
+    public ResponseEntity<ChangePasswordResponseDTO> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO) {
+        userService.changePassword(changePasswordRequestDTO);
+        ChangePasswordResponseDTO changePasswordResponseDTO = new ChangePasswordResponseDTO();
+        changePasswordResponseDTO.setMessage("Password changed successfully");
+
+        return ResponseEntity.ok().body(changePasswordResponseDTO);
     }
 }

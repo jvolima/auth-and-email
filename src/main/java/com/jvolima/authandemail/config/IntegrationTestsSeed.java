@@ -27,7 +27,7 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         String encodedPassword1 = passwordEncoder.encode("123456");
         user1.setPassword(encodedPassword1);
         user1.setRole(Role.USER);
-        user1.setVerificationCode("code1");
+        user1.setVerificationToken("code1");
         user1.setEnabled(true);
         userRepository.save(user1);
 
@@ -38,7 +38,7 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         String encodedPassword2 = passwordEncoder.encode("123456");
         user2.setPassword(encodedPassword2);
         user2.setRole(Role.USER);
-        user2.setVerificationCode("code2");
+        user2.setVerificationToken("code2");
         user2.setEnabled(false);
         userRepository.save(user2);
     }
