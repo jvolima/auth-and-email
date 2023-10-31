@@ -55,7 +55,7 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         user3.setVerificationToken("code3");
         user3.setEnabled(true);
         user3.setChangePasswordToken("validToken");
-        user3.setChangePasswordTokenExpirationDate(Instant.now());
+        user3.setChangePasswordTokenExpirationDate(Instant.now().plus(1, ChronoUnit.DAYS));
         userRepository.save(user3);
 
         User user4 = new User();
@@ -67,7 +67,7 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         user4.setRole(Role.USER);
         user4.setVerificationToken("code4");
         user4.setEnabled(true);
-        user4.setChangePasswordToken("invalidToken");
+        user4.setChangePasswordToken("expiredToken");
         user4.setChangePasswordTokenExpirationDate(Instant.now().minus(1, ChronoUnit.DAYS));
         userRepository.save(user4);
     }

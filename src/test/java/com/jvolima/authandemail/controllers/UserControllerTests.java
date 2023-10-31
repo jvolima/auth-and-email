@@ -124,11 +124,24 @@ public class UserControllerTests {
     public void changePasswordShouldReturnOkWhenTokenIsValid() throws Exception {
         String jsonBody = objectMapper.writeValueAsString(Factory.changePasswordTokenValid());
         ResultActions result =
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/change-password")
+                mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users/change-password")
                         .content(jsonBody)
                         .contentType(MediaType.APPLICATION_JSON)
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(MockMvcResultMatchers.status().isOk());
+    }
+
+    @Test
+    public void changePasswordShouldReturnOkWhenTokenIsInvalid() throws Exception {
+        System.out.println(Factory.changePasswordTokenInvalid().getChangePasswordToken());
+        String jsonBody = objectMapper.writeValueAsString(Factory.changePasswordTokenInvalid());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users/change-password")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 }
