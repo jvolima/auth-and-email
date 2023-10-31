@@ -58,6 +58,14 @@ public class Factory {
         return changePasswordRequestDTO;
     }
 
+    public static ChangePasswordRequestDTO changePasswordTokenExpired() {
+        ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
+        changePasswordRequestDTO.setChangePasswordToken("expiredToken");
+        changePasswordRequestDTO.setNewPassword("654321");
+
+        return changePasswordRequestDTO;
+    }
+
     public static ChangePasswordRequestDTO changePasswordTokenInvalid() {
         ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
         changePasswordRequestDTO.setChangePasswordToken("invalidToken");

@@ -133,6 +133,18 @@ public class UserControllerTests {
     }
 
     @Test
+    public void changePasswordShouldReturnOkWhenTokenHasExpired() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.changePasswordTokenExpired());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users/change-password")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
     public void changePasswordShouldReturnOkWhenTokenIsInvalid() throws Exception {
         System.out.println(Factory.changePasswordTokenInvalid().getChangePasswordToken());
         String jsonBody = objectMapper.writeValueAsString(Factory.changePasswordTokenInvalid());
