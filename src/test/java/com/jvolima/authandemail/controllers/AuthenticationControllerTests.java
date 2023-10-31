@@ -42,7 +42,7 @@ public class AuthenticationControllerTests {
 
     @Test
     public void signInShouldReturnTokenWhenDataIsValid() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(Factory.seedUserSignIn());
+        String jsonBody = objectMapper.writeValueAsString(Factory.existingUserSignIn());
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/auth/sign-in")
                         .content(jsonBody)

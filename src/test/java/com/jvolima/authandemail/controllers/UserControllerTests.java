@@ -54,7 +54,7 @@ public class UserControllerTests {
 
     @Test
     public void signUpShouldReturnBadRequestWhenEmailIsDuplicated() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(Factory.seedUserSignUp());
+        String jsonBody = objectMapper.writeValueAsString(Factory.existingUserSignUp());
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.post("/api/v1/users/sign-up")
                         .content(jsonBody)
@@ -86,7 +86,7 @@ public class UserControllerTests {
 
     @Test
     public void forgotPasswordShouldReturnOkWhenEmailExists() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(Factory.seedUserSignIn().getEmail());
+        String jsonBody = objectMapper.writeValueAsString(Factory.existingUserSignIn().getEmail());
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/forgot-password")
                         .content(jsonBody)

@@ -15,7 +15,7 @@ public class Factory {
         return signUpRequestDTO;
     }
 
-    public static SignUpRequestDTO seedUserSignUp() {
+    public static SignUpRequestDTO existingUserSignUp() {
         SignUpRequestDTO signUpRequestDTO = new SignUpRequestDTO();
         signUpRequestDTO.setFirstname("Alice");
         signUpRequestDTO.setLastname("James");
@@ -41,7 +41,7 @@ public class Factory {
         return signInRequestDTO;
     }
 
-    public static SignInRequestDTO seedUserSignIn() {
+    public static SignInRequestDTO existingUserSignIn() {
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
         signInRequestDTO.setEmail("alicejames@gmail.com");
         signInRequestDTO.setPassword("123456");

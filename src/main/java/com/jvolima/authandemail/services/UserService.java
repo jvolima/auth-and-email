@@ -54,8 +54,8 @@ public class UserService {
     }
 
     @Transactional
-    public void verifyAccount(String verificationToken) {
-        User user = userRepository.findByVerificationToken(verificationToken).orElseThrow(() -> new NotFoundException("User not found."));
+    public void verifyAccount(VerifyRequestDTO verifyRequestDTO) {
+        User user = userRepository.findByVerificationToken(verifyRequestDTO.getVerificationToken()).orElseThrow(() -> new NotFoundException("User not found."));
         user.setEnabled(true);
         userRepository.save(user);
     }

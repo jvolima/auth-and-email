@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping("/verify/{verificationToken}")
     public ResponseEntity<VerifyResponseDTO> verify(@PathVariable String verificationToken) {
-        userService.verifyAccount(verificationToken);
+        userService.verifyAccount(new VerifyRequestDTO(verificationToken));
         VerifyResponseDTO verifyResponseDTO = new VerifyResponseDTO();
         verifyResponseDTO.setMessage("Account verified successfully.");
 
