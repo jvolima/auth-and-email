@@ -12,6 +12,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -68,6 +70,8 @@ public class UserService {
         }
         String changePasswordToken = UUID.randomUUID().toString().replaceAll("-", "");
         user.setChangePasswordToken(changePasswordToken);
+        Instant changePasswordTokenExpirationDate = Instant.now().plus(1, ChronoUnit.DAYS);
+        user.setChangePasswordTokenExpirationDate(changePasswordTokenExpirationDate);
         userRepository.save(user);
         emailService.sendEmail(
                 user.getEmail(),
@@ -79,6 +83,9 @@ public class UserService {
     @Transactional
     public void changePassword(ChangePasswordRequestDTO changePasswordRequestDTO) {
         User user = userRepository.findByChangePasswordToken(changePasswordRequestDTO.getChangePasswordToken()).orElseThrow(() -> new NotFoundException("User not found."));
+        if (user.getChangePasswordTokenExpirationDate().isBefore(Instant.now())) {
+            throw new BadRequestException("Change password token has expired.");
+        }
         String encodedPassword = passwordEncoder.encode(changePasswordRequestDTO.getNewPassword());
         user.setPassword(encodedPassword);
         userRepository.save(user);

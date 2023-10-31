@@ -65,7 +65,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void verifyShouldReturnOkWhenCodeIsValid() throws Exception {
+    public void verifyShouldReturnOkWhenTokenIsValid() throws Exception {
         String notVerifiedUserCode = "code2";
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify/" + notVerifiedUserCode)
@@ -75,7 +75,7 @@ public class UserControllerTests {
     }
 
     @Test
-    public void verifyShouldReturnNotFoundWhenCodeIsInvalid() throws Exception {
+    public void verifyShouldReturnNotFoundWhenTokenIsInvalid() throws Exception {
         String invalidCode = "invalid";
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify/" + invalidCode)
@@ -118,5 +118,17 @@ public class UserControllerTests {
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void changePasswordShouldReturnOkWhenTokenIsValid() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.changePasswordTokenValid());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/change-password")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isOk());
     }
 }

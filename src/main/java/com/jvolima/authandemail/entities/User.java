@@ -6,6 +6,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.time.Instant;
 import java.util.Collection;
 import java.util.List;
 import java.util.Objects;
@@ -42,6 +43,7 @@ public class User implements UserDetails {
     @Column(updatable = false)
     private String verificationToken;
     private String changePasswordToken;
+    private Instant changePasswordTokenExpirationDate;
 
     @Override
     public boolean equals(Object o) {
