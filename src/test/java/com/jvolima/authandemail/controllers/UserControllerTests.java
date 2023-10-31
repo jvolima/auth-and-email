@@ -83,4 +83,16 @@ public class UserControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
+    @Test
+    public void forgotPasswordShouldReturnOkWhenEmailExists() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.seedUserSignIn().getEmail());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/forgot-password")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isOk());
+    }
 }
