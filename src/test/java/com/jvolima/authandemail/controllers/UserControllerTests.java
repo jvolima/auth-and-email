@@ -107,4 +107,16 @@ public class UserControllerTests {
 
         result.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
+
+    @Test
+    public void forgotPasswordShouldReturnBadRequestWhenAccountIsNotVerified() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.notVerifiedUserSignIn().getEmail());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/forgot-password")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
 }

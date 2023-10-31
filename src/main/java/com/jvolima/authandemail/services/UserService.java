@@ -63,6 +63,9 @@ public class UserService {
     @Transactional
     public void forgotPassword(ForgotPasswordRequestDTO forgotPasswordRequestDTO) {
         User user = userRepository.findByEmail(forgotPasswordRequestDTO.getEmail()).orElseThrow(() -> new NotFoundException("User not found."));
+        if (!user.getEnabled()) {
+            throw new BadRequestException("Account not verified, check your email.");
+        }
         String changePasswordToken = UUID.randomUUID().toString().replaceAll("-", "");
         user.setChangePasswordToken(changePasswordToken);
         userRepository.save(user);
