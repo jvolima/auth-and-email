@@ -1,5 +1,6 @@
 package com.jvolima.authandemail.utils;
 
+import com.jvolima.authandemail.dto.ChangePasswordRequestDTO;
 import com.jvolima.authandemail.dto.SignInRequestDTO;
 import com.jvolima.authandemail.dto.SignUpRequestDTO;
 
@@ -47,5 +48,21 @@ public class Factory {
         signInRequestDTO.setPassword("123456");
 
         return signInRequestDTO;
+    }
+
+    public static ChangePasswordRequestDTO changePasswordTokenValid() {
+        ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
+        changePasswordRequestDTO.setChangePasswordToken("validToken");
+        changePasswordRequestDTO.setNewPassword("654321");
+
+        return changePasswordRequestDTO;
+    }
+
+    public static ChangePasswordRequestDTO changePasswordTokenInvalid() {
+        ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
+        changePasswordRequestDTO.setChangePasswordToken("invalidToken");
+        changePasswordRequestDTO.setNewPassword("654321");
+
+        return changePasswordRequestDTO;
     }
 }

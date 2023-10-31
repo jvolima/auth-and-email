@@ -9,6 +9,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+import java.time.Instant;
+import java.time.temporal.ChronoUnit;
+
 @RequiredArgsConstructor
 @Profile("test")
 @Configuration
@@ -41,5 +44,31 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         user2.setVerificationToken("code2");
         user2.setEnabled(false);
         userRepository.save(user2);
+
+        User user3 = new User();
+        user3.setFirstname("Thomas");
+        user3.setLastname("Jefferson");
+        user3.setEmail("thomasjefferson@gmail.com");
+        String encodedPassword3 = passwordEncoder.encode("123456");
+        user3.setPassword(encodedPassword3);
+        user3.setRole(Role.USER);
+        user3.setVerificationToken("code3");
+        user3.setEnabled(true);
+        user3.setChangePasswordToken("validToken");
+        user3.setChangePasswordTokenExpirationDate(Instant.now());
+        userRepository.save(user3);
+
+        User user4 = new User();
+        user4.setFirstname("Serena");
+        user4.setLastname("Williams");
+        user4.setEmail("serenawilliams@gmail.com");
+        String encodedPassword4 = passwordEncoder.encode("123456");
+        user4.setPassword(encodedPassword4);
+        user4.setRole(Role.USER);
+        user4.setVerificationToken("code4");
+        user4.setEnabled(true);
+        user4.setChangePasswordToken("invalidToken");
+        user4.setChangePasswordTokenExpirationDate(Instant.now().minus(1, ChronoUnit.DAYS));
+        userRepository.save(user4);
     }
 }
