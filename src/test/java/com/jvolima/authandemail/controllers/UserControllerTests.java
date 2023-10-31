@@ -66,7 +66,7 @@ public class UserControllerTests {
 
     @Test
     public void verifyShouldReturnOkWhenTokenIsValid() throws Exception {
-        String notVerifiedUserCode = "code2";
+        String notVerifiedUserCode = "verificationToken2";
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/verify/" + notVerifiedUserCode)
                         .accept(MediaType.APPLICATION_JSON));
@@ -97,18 +97,6 @@ public class UserControllerTests {
     }
 
     @Test
-    public void forgotPasswordShouldReturnNotFoundWhenEmailDoesNotExist() throws Exception {
-        String jsonBody = objectMapper.writeValueAsString(Factory.nonExistingUserSignIn().getEmail());
-        ResultActions result =
-                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/forgot-password")
-                        .content(jsonBody)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .accept(MediaType.APPLICATION_JSON));
-
-        result.andExpect(MockMvcResultMatchers.status().isNotFound());
-    }
-
-    @Test
     public void forgotPasswordShouldReturnBadRequestWhenAccountIsNotVerified() throws Exception {
         String jsonBody = objectMapper.writeValueAsString(Factory.notVerifiedUserSignIn().getEmail());
         ResultActions result =
@@ -118,6 +106,18 @@ public class UserControllerTests {
                         .accept(MediaType.APPLICATION_JSON));
 
         result.andExpect(MockMvcResultMatchers.status().isBadRequest());
+    }
+
+    @Test
+    public void forgotPasswordShouldReturnNotFoundWhenEmailDoesNotExist() throws Exception {
+        String jsonBody = objectMapper.writeValueAsString(Factory.nonExistingUserSignIn().getEmail());
+        ResultActions result =
+                mockMvc.perform(MockMvcRequestBuilders.get("/api/v1/users/forgot-password")
+                        .content(jsonBody)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON));
+
+        result.andExpect(MockMvcResultMatchers.status().isNotFound());
     }
 
     @Test
@@ -146,7 +146,6 @@ public class UserControllerTests {
 
     @Test
     public void changePasswordShouldReturnOkWhenTokenIsInvalid() throws Exception {
-        System.out.println(Factory.changePasswordTokenInvalid().getChangePasswordToken());
         String jsonBody = objectMapper.writeValueAsString(Factory.changePasswordTokenInvalid());
         ResultActions result =
                 mockMvc.perform(MockMvcRequestBuilders.patch("/api/v1/users/change-password")

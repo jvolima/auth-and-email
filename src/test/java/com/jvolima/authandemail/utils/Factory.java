@@ -26,9 +26,9 @@ public class Factory {
         return signUpRequestDTO;
     }
 
-    public static SignInRequestDTO nonExistingUserSignIn() {
+    public static SignInRequestDTO existingUserSignIn() {
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
-        signInRequestDTO.setEmail("billysmith@gmail.com");
+        signInRequestDTO.setEmail("alicejames@gmail.com");
         signInRequestDTO.setPassword("123456");
 
         return signInRequestDTO;
@@ -42,9 +42,9 @@ public class Factory {
         return signInRequestDTO;
     }
 
-    public static SignInRequestDTO existingUserSignIn() {
+    public static SignInRequestDTO nonExistingUserSignIn() {
         SignInRequestDTO signInRequestDTO = new SignInRequestDTO();
-        signInRequestDTO.setEmail("alicejames@gmail.com");
+        signInRequestDTO.setEmail("billysmith@gmail.com");
         signInRequestDTO.setPassword("123456");
 
         return signInRequestDTO;
@@ -52,7 +52,7 @@ public class Factory {
 
     public static ChangePasswordRequestDTO changePasswordTokenValid() {
         ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
-        changePasswordRequestDTO.setChangePasswordToken("validToken");
+        changePasswordRequestDTO.setChangePasswordToken("validChangePasswordToken");
         changePasswordRequestDTO.setNewPassword("654321");
 
         return changePasswordRequestDTO;
@@ -60,7 +60,7 @@ public class Factory {
 
     public static ChangePasswordRequestDTO changePasswordTokenExpired() {
         ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
-        changePasswordRequestDTO.setChangePasswordToken("expiredToken");
+        changePasswordRequestDTO.setChangePasswordToken("expiredChangePasswordToken");
         changePasswordRequestDTO.setNewPassword("654321");
 
         return changePasswordRequestDTO;
@@ -68,7 +68,7 @@ public class Factory {
 
     public static ChangePasswordRequestDTO changePasswordTokenInvalid() {
         ChangePasswordRequestDTO changePasswordRequestDTO = new ChangePasswordRequestDTO();
-        changePasswordRequestDTO.setChangePasswordToken("invalidToken");
+        changePasswordRequestDTO.setChangePasswordToken("invalidChangePasswordToken");
         changePasswordRequestDTO.setNewPassword("654321");
 
         return changePasswordRequestDTO;

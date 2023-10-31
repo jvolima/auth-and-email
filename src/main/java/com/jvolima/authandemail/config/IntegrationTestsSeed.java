@@ -30,7 +30,7 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         String encodedPassword1 = passwordEncoder.encode("123456");
         user1.setPassword(encodedPassword1);
         user1.setRole(Role.USER);
-        user1.setVerificationToken("code1");
+        user1.setVerificationToken("verificationToken1");
         user1.setEnabled(true);
         userRepository.save(user1);
 
@@ -41,7 +41,7 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         String encodedPassword2 = passwordEncoder.encode("123456");
         user2.setPassword(encodedPassword2);
         user2.setRole(Role.USER);
-        user2.setVerificationToken("code2");
+        user2.setVerificationToken("verificationToken2");
         user2.setEnabled(false);
         userRepository.save(user2);
 
@@ -52,9 +52,9 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         String encodedPassword3 = passwordEncoder.encode("123456");
         user3.setPassword(encodedPassword3);
         user3.setRole(Role.USER);
-        user3.setVerificationToken("code3");
+        user3.setVerificationToken("verificationToken3");
         user3.setEnabled(true);
-        user3.setChangePasswordToken("validToken");
+        user3.setChangePasswordToken("validChangePasswordToken");
         user3.setChangePasswordTokenExpirationDate(Instant.now().plus(1, ChronoUnit.DAYS));
         userRepository.save(user3);
 
@@ -65,9 +65,9 @@ public class IntegrationTestsSeed implements CommandLineRunner {
         String encodedPassword4 = passwordEncoder.encode("123456");
         user4.setPassword(encodedPassword4);
         user4.setRole(Role.USER);
-        user4.setVerificationToken("code4");
+        user4.setVerificationToken("verificationToken4");
         user4.setEnabled(true);
-        user4.setChangePasswordToken("expiredToken");
+        user4.setChangePasswordToken("expiredChangePasswordToken");
         user4.setChangePasswordTokenExpirationDate(Instant.now().minus(1, ChronoUnit.DAYS));
         userRepository.save(user4);
     }
