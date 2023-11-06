@@ -50,7 +50,7 @@ public class UserController {
     public ResponseEntity<ForgotPasswordResponseDTO> forgotPassword(@RequestBody ForgotPasswordRequestDTO forgotPasswordRequestDTO) {
         userService.forgotPassword(forgotPasswordRequestDTO);
         ForgotPasswordResponseDTO forgotPasswordResponseDTO = new ForgotPasswordResponseDTO();
-        forgotPasswordResponseDTO.setMessage("Email to change password has been sent");
+        forgotPasswordResponseDTO.setMessage("Email to change password has been sent.");
 
         return ResponseEntity.ok().body(forgotPasswordResponseDTO);
     }
@@ -59,7 +59,7 @@ public class UserController {
     public ResponseEntity<ChangePasswordResponseDTO> changePassword(@RequestBody ChangePasswordRequestDTO changePasswordRequestDTO) {
         userService.changePassword(changePasswordRequestDTO);
         ChangePasswordResponseDTO changePasswordResponseDTO = new ChangePasswordResponseDTO();
-        changePasswordResponseDTO.setMessage("Password changed successfully");
+        changePasswordResponseDTO.setMessage("Password changed successfully.");
 
         return ResponseEntity.ok().body(changePasswordResponseDTO);
     }
