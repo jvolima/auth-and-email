@@ -1,0 +1,37 @@
+version: '3.5'
+
+services:
+  auth-and-email-api:
+    image: 'auth-and-email-api'
+    build:
+      context: .
+    container_name: auth-and-email-api
+    depends_on:
+      - auth-and-email-db
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://auth-and-email-db:5432/db
+      - SPRING_DATASOURCE_USERNAME=user
+      - SPRING_DATASOURCE_PASSWORD=password
+      - SPRING_JPA_HIBERNATE_DDL_AUTO=update
+    ports:
+      - "8080:8080"
+
+  auth-and-email-db:
+    image: 'postgres:16.0-alpine3.18'
+    container_name: auth-and-email-db
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db
+    ports:
+      - "5420:5432"
+
+  auth-and-email-db-tests:
+    image: 'postgres:16.0-alpine3.18'
+    container_name: auth-and-email-db-tests
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=db-tests
+    ports:
+      - "5430:5432"
