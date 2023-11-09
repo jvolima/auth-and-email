@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
 @SpringBootTest
 @AutoConfigureMockMvc
 @Transactional
-@ActiveProfiles(profiles = "test")
+@ActiveProfiles(profiles = "tests")
 public class UserControllerTests {
 
     @Autowired

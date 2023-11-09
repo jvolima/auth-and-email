@@ -13,7 +13,7 @@ import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
 @RequiredArgsConstructor
-@Profile("test")
+@Profile("tests")
 @Configuration
 public class IntegrationTestsSeed implements CommandLineRunner {
 

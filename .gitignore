@@ -4,6 +4,7 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 src/main/resources/env-dev.properties
+src/main/resources/env-tests.properties
 
 ### STS ###
 .apt_generated
