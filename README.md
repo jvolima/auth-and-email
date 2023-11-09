@@ -19,8 +19,8 @@
 
 ## Extra miles
 - [x] Token and expiration date in the user table to change the password
-- [] Flyway
-- [] Docker
+- [x] Flyway
+- [x] Docker
 - [x] Integration tests
 
 ## Routes
