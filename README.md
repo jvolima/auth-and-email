@@ -16,6 +16,8 @@
 - Lombok
 - JavaMail
 - JUnit
+- Flyway
+- Docker
 
 ## Extra miles
 - [x] Token and expiration date in the user table to change the password
